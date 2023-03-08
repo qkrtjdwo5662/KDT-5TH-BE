@@ -14,5 +14,5 @@ const server = express();
 
 const PORT = 4000;
 server.listen(PORT, () => {
-  console.log(`${}`)
-})
+  console.log(`${PORT}번 시작`);
+});
