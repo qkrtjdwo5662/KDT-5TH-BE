@@ -9,7 +9,7 @@ const app = express();
 app.use(cors());
 
 app.use('/', (req, res) => {
-  const str = '안녕하세요. 백엔드 입니다.';
+  const str = 'Hello, Here is backend(modify)';
   const json = JSON.stringify(str);
   res.send(json);
 });
