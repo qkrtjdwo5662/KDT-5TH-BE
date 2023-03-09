@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/main.js"></script>
+  <title>Document</title>
+</head>
+
+<body>
+  <h2>hello</h2>
+  <h2>회원 목록</h2>
+  <h2>
+    총 회원 수 <%= USER2.length %>
+  </h2>
+  <ul>
+    <% if(USER2.length > 0) {%>
+    <% for(let i=0; i< USER2.length; i++) {%>
+    <li>
+      <p>
+        ID : <%= USER2[i].id %>
+      </p>
+      <p>
+        NAME : <%= USER2[i].name %>
+      </p>
+      <p>
+        EMAIL : <%= USER2[i].email %>
+      </p>
+    </li>
+    <% }%>
+    <%} else console.log("XX");%>
+  </ul>
+</body>
+
+</html>
