@@ -11,28 +11,47 @@
 </head>
 
 <body>
+  <a href="/">뒤로</a>
   <h2>hello</h2>
   <h2>회원 목록</h2>
   <h2>
-    총 회원 수 <%= USER2.length %>
+    총 회원 수 <%= USER.length %>
   </h2>
   <ul>
-    <% if(USER2.length > 0) {%>
-    <% for(let i=0; i< USER2.length; i++) {%>
+    <% if(USER.length > 0) {%>
+    <% for(let i=0; i< USER.length; i++) {%>
     <li>
       <p>
-        ID : <%= USER2[i].id %>
+        ID : <%= USER[i].id %>
       </p>
       <p>
-        NAME : <%= USER2[i].name %>
+        NAME : <%= USER[i].name %>
       </p>
       <p>
-        EMAIL : <%= USER2[i].email %>
+        EMAIL : <%= USER[i].email %>
       </p>
+      <a href="javascript:void(0)" onclick="deleteUser('<%= USER[i].id %>')">삭제</a>
     </li>
     <% }%>
     <%} else console.log("XX");%>
   </ul>
+  <br />
+  <h2>회원등록</h2>
+  <form action="/users/add" method="POST">
+    <div>
+      <label>ID : </label>
+      <input type="text" name="id" />
+    </div>
+    <div>
+      <label>NAME : </label>
+      <input type="text" name="name" />
+    </div>
+    <div>
+      <label>EMAIL : </label>
+      <input type="email" name="email" />
+    </div>
+    <button type="submit">등록</button>
+  </form>
 </body>
 
 </html>

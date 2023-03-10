@@ -1,19 +1,9 @@
-// @ts-check
+// @ts-nocheck
 const express = require('express');
 
-const app = express();
 const router = express.Router();
 
-const PORT = 4000;
-
-const USER = {
-  1: {
-    id: 'qkrtjdwo5662',
-    name: 'park',
-  },
-};
-
-const USER2 = [
+const USER = [
   {
     id: 'qkrtjdwo5662',
     name: 'park',
@@ -26,34 +16,82 @@ const USER2 = [
   },
 ];
 
-app.use('/users', router);
-
 router.get('/', (req, res) => {
-  res.render('users.ejs', { USER2 });
+  res.render('users.ejs', { USER });
 });
 
 router.get('/id/:id', (req, res) => {
-  const userData = USER[req.params.id];
+  const userData = USER.find((user) => user.id === req.params.id);
   if (userData) {
-    res.end(userData);
+    res.send(userData);
   } else {
-    res.end('ID를 못찾겠어요');
+    const err = new Error('ID가 없다');
+    err.statusCode = 404;
+    throw err;
+    // res.end('ID를 못찾겠어요');
   }
 });
-router.post('/add', (req, res) => {
-  if (req.query.id && req.query.name) {
-    const newUserData = {
-      id: req.query.id,
-      name: req.query.name,
-    };
-    USER[Object.keys[USER].length + 1] = newUserData;
-    // 1. Object.keys[USER].length + 1 : USER object의 키 값의 길이를 +1한 값을
-    // 2. USER[Object.keys[USER].length + 1] : USER의 키로 받아서(즉, 최신상태의 USER의 마지막 key에 바로 다음 키)
-    // 3. USER[Object.keys[USER].length + 1] = newUserData; : newUserData의 값(key[id, name])을 저장해준다.
 
-    res.send('회원 등록 완료');
+router.post('/add', (req, res) => {
+  if (Object.keys(req.query) > 1) {
+    if (req.query.id && req.query.name && req.query.email) {
+      const newUserData = {
+        id: req.body.id,
+        name: req.body.name,
+        email: req.body.email,
+      };
+      USER[USER.length] = newUserData;
+      res.redirect('/users');
+    } else {
+      const err = new Error('폼태그 확인하셔요 등록실패요');
+      err.statusCode = 400;
+      throw err;
+    }
+  } else if (req.body) {
+    const newUserData = {
+      id: req.body.id,
+      name: req.body.name,
+      email: req.body.email,
+    };
+    USER[USER.length] = newUserData;
+    res.redirect('/users');
   } else {
-    res.send('제대로 입력해라');
+    const err = new Error('등록 실패요');
+    err.statusCode = 400;
+    throw err;
+  }
+});
+
+router.put('/modify/:id', (req, res) => {
+  if (req.query.name && req.query.email) {
+    const userIndex = USER.findIndex((user) => user.id === req.params.id);
+    if (userIndex !== -1) {
+      USER[userIndex] = {
+        name: req.query.name,
+        email: req.query.email,
+      };
+      res.send('수정 완');
+    } else {
+      const err = new Error('ID가 없다 수정 실패');
+      err.statusCode = 400;
+      throw err;
+    }
+  } else {
+    const err = new Error('정보 제대로 입력 수정 실패');
+    err.statusCode = 400;
+    throw err;
+  }
+});
+
+router.delete('/delete/:id', (req, res) => {
+  const userIndex = USER.findIndex((user) => user.id === req.params.id);
+  if (userIndex !== -1) {
+    USER.splice(userIndex, 1);
+    res.send('삭제 완');
+  } else {
+    const err = new Error('정보 제대로 입력 삭제 실패');
+    err.statusCode = 400;
+    throw err;
   }
 });
 
@@ -61,15 +99,12 @@ router.get('/show', (req, res) => {
   res.writeHead(200, { 'Content-Type': 'text/html; charset=UTF-8' });
   res.write('<h1>Hello, dynamic</h1>');
 
-  for (let i = 0; i < USER2.length; i += 1) {
-    res.write(`<h2>id : ${USER2[i].id}</h2>`);
-    res.write(`<h2>name : ${USER2[i].name}</h2>`);
+  for (let i = 0; i < USER.length; i += 1) {
+    res.write(`<h2>id : ${USER[i].id}</h2>`);
+    res.write(`<h2>name : ${USER[i].name}</h2>`);
+    res.write(`<h2>name : ${USER[i].email}</h2>`);
   }
   res.send('end');
-});
-
-app.listen(PORT, () => {
-  console.log(`${PORT}시작`);
 });
 
 module.exports = router;

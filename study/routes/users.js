@@ -24,7 +24,7 @@ server.use('/users', router); // '/users'로(localhost:4000/users) 접근 시 ro
 // 라우터 호출 시작
 // userData 읽기
 router.get('/', (req, res) => {
-  res.render('users.ejs', { userData }); //
+  res.render('users.ejs', { userData });
 });
 // userData에 user추가
 router.post('/add', (req, res) => {

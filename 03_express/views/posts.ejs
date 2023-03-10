@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>POST</title>
+</head>
+
+<body>
+  <a href="/">뒤로</a>
+  <h2>post 목록</h2>
+  <h2>
+    총 POST 수 <%= POST.length %>
+  </h2>
+  <ul>
+    <% if(POST.length > 0) {%>
+    <% for(let i=0; i< POST.length; i++) {%>
+    <li>
+      <p>
+        TITLE : <%= POST[i].title %>
+      </p>
+      <p>
+        CONTENTS : <%= POST[i].content %>
+      </p>
+      <button class="deleteBtn">삭제</button>
+    </li>
+    <% }%>
+    <%} else console.log("XX");%>
+  </ul>
+  <br />
+  <h2>post 등록</h2>
+  <form action="/posts/add" method="POST">
+    <div>
+      <label>TITLE : </label>
+      <input type="text" name="title" />
+    </div>
+    <div>
+      <label>NAME : </label>
+      <input type="text" name="content" />
+    </div>
+    <button type="submit">등록</button>
+  </form>
+</body>
+
+</html>
