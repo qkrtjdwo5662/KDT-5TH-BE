@@ -1,6 +1,7 @@
 // @ts-check
 // 외부 모듈
 const express = require('express');
+
 const bodyParser = require('body-parser');
 
 const app = express();
@@ -10,6 +11,7 @@ const app = express();
 const mainRouter = require('./routes');
 const userRouter = require('./routes/users');
 const postRouter = require('./routes/posts');
+const dataRouter = require('./routes/data');
 
 const PORT = 4000;
 
@@ -23,6 +25,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/', mainRouter);
 app.use('/users', userRouter); // '/users' userRouter로 처리
 app.use('/posts', postRouter);
+app.use('/data', dataRouter);
 
 // 에러 처리
 app.use((err, req, res, next) => {
