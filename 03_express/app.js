@@ -11,6 +11,7 @@ const app = express();
 const mainRouter = require('./routes');
 const userRouter = require('./routes/users');
 const postRouter = require('./routes/posts');
+const boardRouter = require('./routes/board');
 const dataRouter = require('./routes/data');
 
 const PORT = 4000;
@@ -25,6 +26,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/', mainRouter);
 app.use('/users', userRouter); // '/users' userRouter로 처리
 app.use('/posts', postRouter);
+app.use('/board', boardRouter);
 app.use('/data', dataRouter);
 
 // 에러 처리
