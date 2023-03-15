@@ -38,6 +38,7 @@ userRouter.delete('/delete/:id', (req, res) => {
   res.send('삭제완료');
 });
 
+// 포트
 app.listen(PORT, () => {
   console.log(`${PORT}실행`);
 });
