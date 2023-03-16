@@ -11,7 +11,6 @@ async function deleteUser(id) {
 }
 
 // function deleteArticle(title) {
-//   console.log('시발련아');
 //   fetch(`/board/delete/${title}`, {
 //     method: 'delete',
 //     headers: {

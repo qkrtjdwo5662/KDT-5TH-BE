@@ -3,6 +3,7 @@
 const express = require('express');
 
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 
 const app = express();
 
@@ -13,6 +14,9 @@ const userRouter = require('./routes/users');
 const postRouter = require('./routes/posts');
 const boardRouter = require('./routes/board');
 const dataRouter = require('./routes/data');
+const dbBoardRouter = require('./routes/dbBoard');
+const dbUsersRouter = require('./routes/dbUsers');
+const cookieRouter = require('./routes/cookie');
 
 const PORT = 4000;
 
@@ -21,6 +25,8 @@ app.use(express.static('public')); // public로 상위 폴더 변경
 // body-parser 관련
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+// cookie-parser 관련
+app.use(cookieParser());
 
 // 라우터 등록
 app.use('/', mainRouter);
@@ -28,6 +34,9 @@ app.use('/users', userRouter); // '/users' userRouter로 처리
 app.use('/posts', postRouter);
 app.use('/board', boardRouter);
 app.use('/data', dataRouter);
+app.use('/dbBoard', dbBoardRouter);
+app.use('/dbUsers', dbUsersRouter);
+app.use('/cookie', cookieRouter);
 
 // 에러 처리
 app.use((err, req, res, next) => {

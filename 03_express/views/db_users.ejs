@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/main.js"></script>
+  <title>Document</title>
+</head>
+
+<body>
+  <a href="/">뒤로</a>
+  <h2>hello</h2>
+  <h2>회원 목록</h2>
+  <h2>
+    총 회원 수 <%= USER.length %>
+  </h2>
+  <ul>
+    <% if(USER.length > 0) {%>
+    <% for(let i=0; i< USER.length; i++) {%>
+    <li>
+      <p>
+        NAME : <%= USER[i].NAME %>
+      </p>
+      <p>
+        EMAIL : <%= USER[i].EMAIL %>
+      </p>
+      <p>
+        PASSWORD : <%= USER[i].PASSWORD %>
+      </p>
+      <p>
+        ADDRESS : <%= USER[i].ADDRESS %>
+      </p>
+      <p>
+        AGE : <%= USER[i].AGE %>
+      </p>
+      <a href="javascript:void(0)" onclick="deleteUser('<%= USER[i].ID_PK %>')">삭제</a>
+    </li>
+    <% }%>
+    <%} else console.log("XX");%>
+  </ul>
+  <br />
+  <h2>회원등록</h2>
+  <form action="/dbUsers/add" method="POST">
+    <div>
+      <label>NAME : </label>
+      <input type="text" name="name" />
+    </div>
+    <div>
+      <label>EMAIL : </label>
+      <input type="text" name="email" />
+    </div>
+    <div>
+      <label>PASSWORD : </label>
+      <input type="text" name="password" />
+    </div>
+    <div>
+      <label>ADDRESS : </label>
+      <input type="text" name="address" />
+    </div>
+    <div>
+      <label>AGE : </label>
+      <input type="text" name="age" />
+    </div>
+    <button type="submit">등록</button>
+  </form>
+</body>
+<script>
+  async function deleteUser(id) {
+    const res = await fetch(`http://localhost:4000/dbUsers/delete/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-type': 'application/json',
+      },
+    });
+    if (res.status === 200) location.reload();
+    else console.log(res);
+  }
+</script>
+
+</html>
