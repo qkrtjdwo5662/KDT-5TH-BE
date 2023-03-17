@@ -3,12 +3,19 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  res.cookie('alert', true, {
-    expires: new Date(Date.now() + 1000 * 60),
-    httpOnly: true,
-  });
-  console.log(req.cookies);
-  res.render('index.ejs');
+  res.render('cookie.ejs');
 });
+
+router.get('/cook', (req, res) => {
+  res.cookie('alert', true, {
+    maxAge: 1000 * 5,
+    httpOnly: false,
+  });
+  res.status(200).json('ㅇㅇ');
+  console.log('쿠키 다굽');
+});
+// router.modify('/modify', (req, res) => {
+//   res.cookie.
+// })
 
 module.exports = router;

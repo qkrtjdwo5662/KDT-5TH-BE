@@ -3,20 +3,34 @@ const boardDB = require('../controllers/boardController');
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
+// 로그인 확인용 미들웨어
+function isLogin(req, res, next) {
+  if (req.session.login) {
+    next();
+  } else {
+    res.status(400);
+    res.send(
+      '로그인하고 들어와라.<br><a href="/login">로그인 페이지로 이동</a>',
+    );
+  }
+}
+
+router.get('/', isLogin, (req, res) => {
   boardDB.getAllArticles((data) => {
     const ARTICLE = data;
-    res.render('db_board.ejs', { ARTICLE });
+    const { userId } = req.session;
+    res.render('db_board.ejs', { ARTICLE, userId });
   });
 });
 
-router.get('/write', (req, res) => {
+router.get('/write', isLogin, (req, res) => {
   res.render('db_board_write.ejs');
 });
 
 router.post('/write', (req, res) => {
   if (req.body.title && req.body.content) {
-    boardDB.createArticle(req.body, (data) => {
+    const { userId } = req.session;
+    boardDB.createArticle(req.body, userId, (data) => {
       console.log(data);
       if (data.affectedRows >= 1) {
         res.redirect('/dbBoard');
@@ -33,7 +47,7 @@ router.post('/write', (req, res) => {
   }
 });
 
-router.get('/modify/:id', (req, res) => {
+router.get('/modify/:id', isLogin, (req, res) => {
   boardDB.getArticle(req.params.id, (data) => {
     if (data.length > 0) {
       console.log(data);
@@ -65,7 +79,7 @@ router.post('/modify/:id', (req, res) => {
   }
 });
 
-router.delete('/delete/:id', (req, res) => {
+router.delete('/delete/:id', isLogin, (req, res) => {
   boardDB.deleteArticle(req.params.id, (data) => {
     // console.log('삭제 완');
     // res.statusCode = 200;

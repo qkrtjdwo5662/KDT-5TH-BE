@@ -119,17 +119,22 @@
     <div class="board_container">
       <div class="board_header">
         <h1>Park's Board</h1>
+
       </div>
       <div class="board_write">
         <span>현재 등록 글 : &nbsp; <%= ARTICLE.length %></span>
         <!-- localhost:4000/board/write -->
         <a class="btn red" href="/dbBoard/write">글쓰기</a>
+        <a class="btn orange" href="/login/logout">로그아웃</a>
       </div>
       <div class="board_body">
         <ul class="board">
           <% if (ARTICLE.length > 0) { %>
           <% for(let i=0; i < ARTICLE.length; i++) { %>
           <li>
+            <div class="author">
+              작성자 : <%= ARTICLE[i].USERID %>
+            </div>
             <div class="title">
               <%= ARTICLE[i].TITLE %>
             </div>
@@ -137,8 +142,10 @@
               <%= ARTICLE[i].CONTENT %>
             </div>
             <div class="foot">
+              <% if (ARTICLE[i].USERID === userId) {%>
               <a class="btn orange" href="/dbBoard/modify/<%= ARTICLE[i].ID_PK %>">수정</a>
               <a class="btn blue" href="/dbBoard" onclick="deleteArticle('<%= ARTICLE[i].ID_PK %>')">삭제</a>
+              <% } %>
             </div>
           </li>
           <% } %>

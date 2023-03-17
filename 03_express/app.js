@@ -4,6 +4,7 @@ const express = require('express');
 
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const session = require('express-session');
 
 const app = express();
 
@@ -17,6 +18,8 @@ const dataRouter = require('./routes/data');
 const dbBoardRouter = require('./routes/dbBoard');
 const dbUsersRouter = require('./routes/dbUsers');
 const cookieRouter = require('./routes/cookie');
+const loginRouter = require('./routes/login');
+const registerRouter = require('./routes/register');
 
 const PORT = 4000;
 
@@ -27,6 +30,16 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 // cookie-parser 관련
 app.use(cookieParser());
+app.use(
+  session({
+    secret: 'park', // 세션 발급 시 사용되는 키 값
+    resave: false, // request마다 자동 저장하는지
+    saveUninitialized: true,
+    cookie: {
+      maxAge: 1000 * 60 * 60,
+    },
+  }),
+);
 
 // 라우터 등록
 app.use('/', mainRouter);
@@ -37,6 +50,8 @@ app.use('/data', dataRouter);
 app.use('/dbBoard', dbBoardRouter);
 app.use('/dbUsers', dbUsersRouter);
 app.use('/cookie', cookieRouter);
+app.use('/login', loginRouter);
+app.use('/register', registerRouter);
 
 // 에러 처리
 app.use((err, req, res, next) => {

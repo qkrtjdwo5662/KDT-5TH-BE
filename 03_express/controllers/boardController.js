@@ -8,9 +8,9 @@ const boardDB = {
       cb(data);
     });
   },
-  createArticle: (newArticle, cb) => {
+  createArticle: (newArticle, userId, cb) => {
     connection.query(
-      `insert into mydb.board (TITLE, CONTENT) values('${newArticle.title}','${newArticle.content}');`,
+      `insert into mydb.board (TITLE, CONTENT, USERID) values('${newArticle.title}','${newArticle.content}', '${userId}');`,
       (err, data) => {
         if (err) throw err;
         cb(data);

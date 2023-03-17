@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <h1>쿠키 팝니다</h1>
+  <input type="checkbox" name="check" id="check" />
+  <label for="check">alert 하루동안 보지 않기</label>
+
+  <script>
+    if (!document.cookie) alert('쿠키팜');
+
+    const checkBox = document.getElementById('check');
+    checkBox.addEventListener("click", async () => {
+      if (checkBox.checked) {
+        console.log("체크함");
+        // document.cookie = 'alert=true;'
+        // localStorage.setItem('checkBox_ls', true);
+        // sessionStorage.setItem('checkBox_ss', true);
+        // document.cookie =
+        const res = await fetch('http://localhost:4000/cookie/cook', {
+          method: 'GET',
+          headers: {
+            'Content-type': 'application/json',
+          },
+        });
+        // location.href = 'cookie/cook';
+        console.log(res);
+        const msg = await res.json();
+        console.log(msg);
+      } else {
+        console.log("체크해제");
+        // document.cookie = 'alert=false;'
+        // localStorage.setItem('checkBox_ls', false);
+        // sessionStorage.setItem('checkBox_ss', false);
+        // document.cookie =
+      }
+    })
+  </script>
+
+</body>
+
+</html>
