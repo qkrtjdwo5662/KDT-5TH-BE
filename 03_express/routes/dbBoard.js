@@ -5,7 +5,7 @@ const router = express.Router();
 
 // 로그인 확인용 미들웨어
 function isLogin(req, res, next) {
-  if (req.session.login) {
+  if (req.session.login || req.signedCookies.user) {
     next();
   } else {
     res.status(400);
@@ -27,7 +27,8 @@ router.get('/write', isLogin, (req, res) => {
   res.render('db_board_write.ejs');
 });
 
-router.post('/write', (req, res) => {
+router.post('/write', isLogin, (req, res) => {
+  // userid -> req.session.userId
   if (req.body.title && req.body.content) {
     const { userId } = req.session;
     boardDB.createArticle(req.body, userId, (data) => {
@@ -60,7 +61,7 @@ router.get('/modify/:id', isLogin, (req, res) => {
   });
 });
 
-router.post('/modify/:id', (req, res) => {
+router.post('/modify/:id', isLogin, (req, res) => {
   if (req.body.title && req.body.content) {
     boardDB.updateArticle(req.body, req.params.id, (data) => {
       console.log(data);

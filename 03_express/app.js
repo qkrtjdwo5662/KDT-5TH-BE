@@ -5,12 +5,13 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+require('dotenv').config();
 
 const app = express();
 
 // 내부 모듈
 // 라우터
-const mainRouter = require('./routes');
+const mainRouter = require('./routes/index');
 const userRouter = require('./routes/users');
 const postRouter = require('./routes/posts');
 const boardRouter = require('./routes/board');
@@ -21,7 +22,7 @@ const cookieRouter = require('./routes/cookie');
 const loginRouter = require('./routes/login');
 const registerRouter = require('./routes/register');
 
-const PORT = 4000;
+const { PORT } = process.env;
 
 app.set('view engine', 'ejs'); // ejs로 웹페이지 구성
 app.use(express.static('public')); // public로 상위 폴더 변경
@@ -29,15 +30,12 @@ app.use(express.static('public')); // public로 상위 폴더 변경
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 // cookie-parser 관련
-app.use(cookieParser());
+app.use(cookieParser('park'));
 app.use(
   session({
     secret: 'park', // 세션 발급 시 사용되는 키 값
     resave: false, // request마다 자동 저장하는지
     saveUninitialized: true,
-    cookie: {
-      maxAge: 1000 * 60 * 60,
-    },
   }),
 );
 

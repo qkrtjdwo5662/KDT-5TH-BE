@@ -13,9 +13,14 @@ router.post('/', (req, res) => {
       if (data[0].PASSWORD === req.body.password) {
         req.session.login = true;
         req.session.userId = req.body.id;
+        // 쿠키 발행
+        res.cookie('user', req.body.id, {
+          maxAge: 1000 * 10,
+          httpOnly: true,
+          signed: true, // 암호화
+        });
         res.status(200);
         res.redirect('/dbBoard');
-        // userDB.login(req.body, (data) => {});
       } else {
         res.status(400);
         res.send('비밀번호 잘못됨 <br><a href="/login">로그인으로 이동</a>');
@@ -30,9 +35,14 @@ router.post('/', (req, res) => {
 });
 
 router.get('/logout', (req, res) => {
+  console.log(req.session);
   req.session.destroy((err) => {
+    console.log('지우기중');
     if (err) throw err;
+    res.clearCookie('user');
     res.redirect('/');
+    console.log('지우기 완료');
+    console.log(req.session);
   });
 });
 module.exports = router;
