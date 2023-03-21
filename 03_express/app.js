@@ -16,11 +16,17 @@ const userRouter = require('./routes/users');
 const postRouter = require('./routes/posts');
 const boardRouter = require('./routes/board');
 const dataRouter = require('./routes/data');
-const dbBoardRouter = require('./routes/dbBoard');
-const dbUsersRouter = require('./routes/dbUsers');
 const cookieRouter = require('./routes/cookie');
-const loginRouter = require('./routes/login');
-const registerRouter = require('./routes/register');
+
+const sqlBoardRouter = require('./routes/SQL_Board');
+const sqlUsersRouter = require('./routes/SQL_Users');
+const mongoBoardRouter = require('./routes/Mongo_Board');
+const mongoUsersRouter = require('./routes/Mongo_Users');
+const sqlLoginRouter = require('./routes/SQL_Login');
+const sqlRegisterRouter = require('./routes/SQL_Register');
+const mongoLoginRouter = require('./routes/Mongo_Login');
+const mongoRegisterRouter = require('./routes/Mongo_Register');
+// const testLoginRouter = require('./routes/testlogin');
 
 const { PORT } = process.env;
 
@@ -45,11 +51,19 @@ app.use('/users', userRouter); // '/users' userRouter로 처리
 app.use('/posts', postRouter);
 app.use('/board', boardRouter);
 app.use('/data', dataRouter);
-app.use('/dbBoard', dbBoardRouter);
-app.use('/dbUsers', dbUsersRouter);
 app.use('/cookie', cookieRouter);
-app.use('/login', loginRouter);
-app.use('/register', registerRouter);
+
+app.use('/sqlBoard', sqlBoardRouter);
+app.use('/sqlUsers', sqlUsersRouter);
+app.use('/mongoBoard', mongoBoardRouter);
+app.use('/mongoUsers', mongoUsersRouter);
+
+app.use('/sqlLogin', sqlLoginRouter);
+app.use('/sqlRegister', sqlRegisterRouter);
+app.use('/mongoLogin', mongoLoginRouter);
+app.use('/mongoRegister', mongoRegisterRouter);
+
+// app.use('/testlogin', testLoginRouter);
 
 // 에러 처리
 app.use((err, req, res, next) => {

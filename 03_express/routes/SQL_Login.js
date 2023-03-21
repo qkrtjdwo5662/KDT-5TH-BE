@@ -1,10 +1,10 @@
 const express = require('express');
-const userDB = require('../controllers/userController');
+const userDB = require('../controllers/SQL_userController');
 
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  res.render('login.ejs');
+  res.render('SQL_login.ejs');
 });
 
 router.post('/', (req, res) => {
@@ -20,15 +20,15 @@ router.post('/', (req, res) => {
           signed: true, // 암호화
         });
         res.status(200);
-        res.redirect('/dbBoard');
+        res.redirect('/sqlBoard');
       } else {
         res.status(400);
-        res.send('비밀번호 잘못됨 <br><a href="/login">로그인으로 이동</a>');
+        res.send('비밀번호 잘못됨 <br><a href="/sqlLogin">로그인으로 이동</a>');
       }
     } else {
       res.status(400);
       res.send(
-        '아이디가 잘못됨 <br><a href="/register">회원가입 창 으로 이동</a>',
+        '아이디가 잘못됨 <br><a href="/sqlRegister">회원가입 창 으로 이동</a>',
       );
     }
   });

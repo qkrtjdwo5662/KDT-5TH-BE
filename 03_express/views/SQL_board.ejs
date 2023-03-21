@@ -57,7 +57,6 @@
       padding: 50px;
     }
 
-    .inner .board_container {}
 
     .inner .board_container .board_header {
       text-align: center;
@@ -124,8 +123,8 @@
       <div class="board_write">
         <span>현재 등록 글 : &nbsp; <%= ARTICLE.length %></span>
         <!-- localhost:4000/board/write -->
-        <a class="btn red" href="/dbBoard/write">글쓰기</a>
-        <a class="btn orange" href="/login/logout">로그아웃</a>
+        <a class="btn red" href="/sqlBoard/write">글쓰기</a>
+        <a class="btn orange" href="/sqlLogin/logout">로그아웃</a>
       </div>
       <div class="board_body">
         <ul class="board">
@@ -143,8 +142,8 @@
             </div>
             <div class="foot">
               <% if (ARTICLE[i].USERID === userId) {%>
-              <a class="btn orange" href="/dbBoard/modify/<%= ARTICLE[i].ID_PK %>">수정</a>
-              <a class="btn blue" href="/dbBoard" onclick="deleteArticle('<%= ARTICLE[i].ID_PK %>')">삭제</a>
+              <a class="btn orange" href="/sqlBoard/modify/<%= ARTICLE[i].ID_PK %>">수정</a>
+              <a class="btn blue" href="/sqlBoard" onclick="deleteArticle('<%= ARTICLE[i].ID_PK %>')">삭제</a>
               <% } %>
             </div>
           </li>
@@ -160,7 +159,7 @@
 </body>
 <script>
   async function deleteArticle(id) {
-    const res = await fetch(`http://localhost:4000/dbBoard/delete/${id}`, {
+    const res = await fetch(`http://localhost:4000/sqlBoard/delete/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-type': 'application/json',

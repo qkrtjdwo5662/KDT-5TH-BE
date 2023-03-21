@@ -1,18 +1,18 @@
 const express = require('express');
-const usersDB = require('../controllers/userController');
+const usersDB = require('../controllers/SQL_userController');
 
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  usersDB.getUsers((data) => {
-    res.render('db_users.ejs', { USER: data });
+  usersDB.getAllUsers((data) => {
+    res.render('SQL_users.ejs', { USER: data });
   });
 });
 
 router.post('/add', (req, res) => {
   console.log(req.body);
   usersDB.createUser(req.body, (data) => {
-    res.redirect('/dbUsers');
+    res.redirect('/sqlUsers');
   });
 });
 

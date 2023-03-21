@@ -1,10 +1,10 @@
 const express = require('express');
-const userDB = require('../controllers/userController');
+const userDB = require('../controllers/SQL_userController');
 
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  res.render('register.ejs');
+  res.render('SQL_register.ejs');
 });
 
 router.post('/', (req, res) => {
@@ -16,18 +16,18 @@ router.post('/', (req, res) => {
           if (data.affectedRows >= 1) {
             console.log('회원가입 완');
             res.status(200);
-            res.redirect('/login');
+            res.redirect('/sqlLogin');
           } else {
             res.status(400);
             res.send(
-              '동일한 ID를 가진 회원이 존재함 <br><a href="/register">회원가입 이동</a>',
+              '동일한 ID를 가진 회원이 존재함 <br><a href="/sqlRegister">회원가입 이동</a>',
             );
           }
         });
       } else {
         res.status(400);
         res.send(
-          '동일한 ID를 가진 회원이 존재함 <br><a href="/register">회원가입 이동</a>',
+          '동일한 ID를 가진 회원이 존재함 <br><a href="/sqlRegister">회원가입 이동</a>',
         );
       }
     });

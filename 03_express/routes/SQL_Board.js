@@ -1,5 +1,5 @@
 const express = require('express');
-const boardDB = require('../controllers/boardController');
+const boardDB = require('../controllers/SQL_boardController');
 
 const router = express.Router();
 
@@ -10,7 +10,7 @@ function isLogin(req, res, next) {
   } else {
     res.status(400);
     res.send(
-      '로그인하고 들어와라.<br><a href="/login">로그인 페이지로 이동</a>',
+      '로그인하고 들어와라.<br><a href="/sqlLogin">로그인 페이지로 이동</a>',
     );
   }
 }
@@ -19,12 +19,12 @@ router.get('/', isLogin, (req, res) => {
   boardDB.getAllArticles((data) => {
     const ARTICLE = data;
     const { userId } = req.session;
-    res.render('db_board.ejs', { ARTICLE, userId });
+    res.render('SQL_board.ejs', { ARTICLE, userId });
   });
 });
 
 router.get('/write', isLogin, (req, res) => {
-  res.render('db_board_write.ejs');
+  res.render('SQL_board_write.ejs');
 });
 
 router.post('/write', isLogin, (req, res) => {
@@ -34,7 +34,7 @@ router.post('/write', isLogin, (req, res) => {
     boardDB.createArticle(req.body, userId, (data) => {
       console.log(data);
       if (data.affectedRows >= 1) {
-        res.redirect('/dbBoard');
+        res.redirect('/sqlBoard');
       } else {
         const err = new Error('글 쓰기 실패');
         err.statusCode = 500;
@@ -52,7 +52,7 @@ router.get('/modify/:id', isLogin, (req, res) => {
   boardDB.getArticle(req.params.id, (data) => {
     if (data.length > 0) {
       console.log(data);
-      res.render('db_board_modify.ejs', { selectedArticle: data[0] });
+      res.render('SQL_board_modify.ejs', { selectedArticle: data[0] });
     } else {
       const err = new Error('해당 ID 값을 가지는 게시글 존재 X');
       err.statusCode = 500;
@@ -66,7 +66,7 @@ router.post('/modify/:id', isLogin, (req, res) => {
     boardDB.updateArticle(req.body, req.params.id, (data) => {
       console.log(data);
       if (data.affectedRows >= 1) {
-        res.redirect('/dbBoard');
+        res.redirect('/sqlBoard');
       } else {
         const err = new Error('수정 실패');
         err.statusCode = 500;
