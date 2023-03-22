@@ -131,18 +131,18 @@
           <% for(let i=0; i < ARTICLE.length; i++) { %>
           <li>
             <div class="author">
-              작성자 : <%= ARTICLE[i].id %>
+              작성자 : <%= ARTICLE[i].USERID %>
             </div>
             <div class="title">
-              <%= ARTICLE[i].title %>
+              <%= ARTICLE[i].TITLE %>
             </div>
             <div class="content">
-              <%= ARTICLE[i].content %>
+              <%= ARTICLE[i].CONTENT %>
             </div>
             <div class="foot">
-              <% if (ARTICLE[i].id === userId) {%>
+              <% if (ARTICLE[i].USERID === userId) {%>
               <a class="btn orange" href="/mongoBoard/modify/<%= ARTICLE[i]._id %>">수정</a>
-              <a class="btn blue" href="/mongoBoard" onclick="deleteArticle('<%= ARTICLE[i]._id %>')">삭제</a>
+              <a class="btn blue" href="#" onclick="deleteArticle('<%= ARTICLE[i]._id %>')">삭제</a>
               <% } %>
             </div>
           </li>
@@ -158,14 +158,15 @@
 </body>
 <script>
   async function deleteArticle(id) {
-    const res = await fetch(`http://localhost:4000/mongoBoard/delete/${id}`, {
+    const res = await fetch(`/mongoBoard/delete/${id}`, {
       method: 'DELETE',
-      headers: {
-        'Content-type': 'application/json',
-      },
     });
-    if (res.status === 200) location.reload();
-    else console.log(res);
+    console.log(res);
+    if (res.status !== 200) return alert('톧신 실패');
+
+    const msg = await res.json();
+    console.log(msg);
+    location.reload();
   }
 </script>
 
