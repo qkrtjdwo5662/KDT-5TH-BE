@@ -2,7 +2,7 @@ const express = require('express');
 const {
   getAllArticles,
   createArticle,
-  getArticle,
+  selectArticle,
   updateArticle,
   deleteArticle,
 } = require('../controllers/SQL_boardController');
@@ -29,7 +29,7 @@ router.get('/write', isLogin, (req, res) => {
 
 router.post('/write', isLogin, createArticle);
 
-router.get('/modify/:id', isLogin, getArticle);
+router.get('/modify/:id', isLogin, selectArticle);
 
 router.post('/modify/:id', isLogin, updateArticle);
 

@@ -5,6 +5,7 @@ const getAllArticles = (req, res) => {
     if (err) throw err;
     const ARTICLE = data;
     const { userId } = req.session;
+    console.log(ARTICLE[0].TITLE);
     res.render('SQL_board.ejs', { ARTICLE, userId });
   });
 };
@@ -20,13 +21,12 @@ const createArticle = (req, res) => {
   );
 };
 
-const getArticle = (req, res) => {
+const selectArticle = (req, res) => {
   connection.query(
     `select * from board where ID_PK = ${req.params.id}`,
     (err, data) => {
       if (err) throw err;
-      console.log(data);
-      const selectedArticle = data;
+      const selectedArticle = data[0]; // 하나만 가져온다는 보장이 없어서
       console.log(selectedArticle);
       res.render('SQL_board_modify.ejs', { selectedArticle });
     },
@@ -58,7 +58,7 @@ const deleteArticle = (req, res) => {
 module.exports = {
   getAllArticles,
   createArticle,
-  getArticle,
+  selectArticle,
   updateArticle,
   deleteArticle,
 };
