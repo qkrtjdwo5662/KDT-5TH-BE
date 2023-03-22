@@ -1,5 +1,5 @@
 const express = require('express');
-const userDB = require('../controllers/SQL_userController');
+const { loginUser } = require('../controllers/SQL_userController');
 
 const router = express.Router();
 
@@ -7,32 +7,7 @@ router.get('/', (req, res) => {
   res.render('SQL_login.ejs');
 });
 
-router.post('/', (req, res) => {
-  userDB.userCheck(req.body.id, (data) => {
-    if (data.length === 1) {
-      if (data[0].PASSWORD === req.body.password) {
-        req.session.login = true;
-        req.session.userId = req.body.id;
-        // 쿠키 발행
-        res.cookie('user', req.body.id, {
-          maxAge: 1000 * 10,
-          httpOnly: true,
-          signed: true, // 암호화
-        });
-        res.status(200);
-        res.redirect('/sqlBoard');
-      } else {
-        res.status(400);
-        res.send('비밀번호 잘못됨 <br><a href="/sqlLogin">로그인으로 이동</a>');
-      }
-    } else {
-      res.status(400);
-      res.send(
-        '아이디가 잘못됨 <br><a href="/sqlRegister">회원가입 창 으로 이동</a>',
-      );
-    }
-  });
-});
+router.post('/', loginUser);
 
 router.get('/logout', (req, res) => {
   console.log(req.session);
