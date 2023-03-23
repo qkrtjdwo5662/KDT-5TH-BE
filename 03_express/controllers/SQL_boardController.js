@@ -26,7 +26,7 @@ const selectArticle = (req, res) => {
     `select * from board where ID_PK = ${req.params.id}`,
     (err, data) => {
       if (err) throw err;
-      const selectedArticle = data[0]; // 하나만 가져온다는 보장이 없어서
+      const selectedArticle = data[0]; // 데이터를 하나만 가져온다는 보장이 없어서
       console.log(selectedArticle);
       res.render('SQL_board_modify.ejs', { selectedArticle });
     },

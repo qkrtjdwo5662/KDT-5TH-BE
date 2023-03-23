@@ -27,9 +27,7 @@ const createArticle = async (req, res) => {
       USERID: userId,
       TITLE: req.body.title,
       CONTENT: req.body.content,
-      IMAGE: req.file ? req.file.filename : null,
     });
-    console.log(req.file);
     res.redirect('/mongoBoard');
   } catch (err) {
     console.error(err);
@@ -45,7 +43,6 @@ const selectArticle = async (req, res) => {
     const selectedArticle = await board.findOne({
       _id: ObjectId(req.params.id),
     });
-    console.log(selectedArticle);
     res.render('Mongo_board_modify.ejs', { selectedArticle });
   } catch (err) {
     console.error(err);
@@ -57,20 +54,10 @@ const updateArticle = async (req, res) => {
     const client = await MongoClient.connect();
     const board = client.db('kdt').collection('board');
 
-    const modify = {
-      TITLE: req.body.title,
-      CONTENT: req.body.content,
-    };
-
-    if (req.file) {
-      modify.IMAGE = req.file.filename;
-      console.log('수정파일존재');
-      console.log(modify);
-    }
     await board.updateOne(
       { _id: ObjectId(req.params.id) },
       {
-        $set: modify,
+        $set: { TITLE: req.body.title, CONTENT: req.body.content },
       },
     );
     res.status(200);

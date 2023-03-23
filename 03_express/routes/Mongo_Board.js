@@ -7,7 +7,30 @@ const {
   deleteArticle,
 } = require('../controllers/Mongo_boardController');
 
+const multer = require('multer');
+
+const fs = require('fs');
+
 const router = express.Router();
+
+// 파일 업로드 설정
+const dir = './uploads';
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, dir);
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.fieldname + '_' + Date.now());
+  },
+});
+
+const limits = {
+  fileSize: 1024 * 1024 * 2,
+};
+
+const upload = multer({ storage, limits });
+
+if (!fs.existsSync(dir)) fs.mkdirSync(dir);
 
 // 로그인 확인용 미들웨어
 function isLogin(req, res, next) {
@@ -27,11 +50,11 @@ router.get('/write', isLogin, (req, res) => {
   res.render('Mongo_board_write.ejs');
 });
 
-router.post('/write', isLogin, createArticle);
+router.post('/write', isLogin, upload.single('img'), createArticle);
 
 router.get('/modify/:id', isLogin, selectArticle);
 
-router.post('/modify/:id', isLogin, updateArticle);
+router.post('/modify/:id', isLogin, upload.single('img'), updateArticle);
 
 router.delete('/delete/:id', isLogin, deleteArticle);
 

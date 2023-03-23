@@ -26,12 +26,15 @@ const sqlLoginRouter = require('./routes/SQL_Login');
 const sqlRegisterRouter = require('./routes/SQL_Register');
 const mongoLoginRouter = require('./routes/Mongo_Login');
 const mongoRegisterRouter = require('./routes/Mongo_Register');
+const mongooseRegisterRouter = require('./routes/Mongoose_Register');
+const mongooseLoginRouter = require('./routes/Mongoose_Login');
 // const testLoginRouter = require('./routes/testlogin');
 
 const { PORT } = process.env;
 
 app.set('view engine', 'ejs'); // ejs로 웹페이지 구성
 app.use(express.static('public')); // public로 상위 폴더 변경
+app.use('/uploads', express.static('uploads'));
 // body-parser 관련
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -62,6 +65,8 @@ app.use('/sqlLogin', sqlLoginRouter);
 app.use('/sqlRegister', sqlRegisterRouter);
 app.use('/mongoLogin', mongoLoginRouter);
 app.use('/mongoRegister', mongoRegisterRouter);
+app.use('/mongooseLogin', mongooseLoginRouter);
+app.use('/mongooseRegister', mongooseRegisterRouter);
 
 // app.use('/testlogin', testLoginRouter);
 
