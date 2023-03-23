@@ -5,7 +5,7 @@ const router = express.Router();
 const { loginUser } = require('../controllers/Mongoose_userController');
 
 router.get('/', (req, res) => {
-  res.render('Mongo_login.ejs');
+  res.render('Mongoose_login.ejs');
 });
 
 router.post('/', loginUser);
