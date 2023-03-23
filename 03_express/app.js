@@ -28,6 +28,8 @@ const mongoLoginRouter = require('./routes/Mongo_Login');
 const mongoRegisterRouter = require('./routes/Mongo_Register');
 const mongooseRegisterRouter = require('./routes/Mongoose_Register');
 const mongooseLoginRouter = require('./routes/Mongoose_Login');
+const mongooseBoardRouter = require('./routes/Mongoose_Board');
+const mongooseUsersRouter = require('./routes/Mongoose_Users');
 // const testLoginRouter = require('./routes/testlogin');
 
 const { PORT } = process.env;
@@ -60,6 +62,8 @@ app.use('/sqlBoard', sqlBoardRouter);
 app.use('/sqlUsers', sqlUsersRouter);
 app.use('/mongoBoard', mongoBoardRouter);
 app.use('/mongoUsers', mongoUsersRouter);
+app.use('/mongooseBoard', mongooseBoardRouter);
+app.use('/mongooseUsers', mongooseUsersRouter);
 
 app.use('/sqlLogin', sqlLoginRouter);
 app.use('/sqlRegister', sqlRegisterRouter);

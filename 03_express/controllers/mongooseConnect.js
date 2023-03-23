@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
 
-// const { MONGO_DB_URI } = process.env;
-
 const MONGO_DB_URI =
   'mongodb+srv://qkrtjdwo5662:1111@cluster0.s7poboc.mongodb.net/?retryWrites=true&w=majority';
 
@@ -25,7 +23,5 @@ const connect = async () => {
     console.error(err);
   }
 };
-
-connect();
 
 module.exports = connect;

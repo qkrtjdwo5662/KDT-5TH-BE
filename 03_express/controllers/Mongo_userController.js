@@ -38,13 +38,6 @@ const loginUser = async (req, res) => {
       $and: [{ id: req.body.id }, { password: req.body.password }],
     });
     if (!findUser) return res.status(400).send(LOGIN_FAIL_MSG);
-    // const findUser = await user.findOne({
-    //   id: req.body.id,
-    // });
-    // if (!findUser) return res.status(400).send(LOGIN_FAIL_MSG);
-
-    // if (findUser.password !== req.body.password)
-    //   return res.status(400).send(LOGIN_FAIL_MSG);
     req.session.login = true;
     req.session.userId = req.body.id;
     res.cookie('user', req.body.id, {

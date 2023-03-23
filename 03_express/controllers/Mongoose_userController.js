@@ -1,17 +1,17 @@
 const MongooseConnect = require('./mongooseConnect');
 const User = require('../models/user');
 
-// MongooseConnect();
+MongooseConnect();
 
 const UNEXPECTED_MSG =
-  '알 수 없는 문 발생<br><a href="/mongoRegister">회원가입으로 이동</a>';
+  '알 수 없는 문 발생<br><a href="/mongooseRegister">회원가입으로 이동</a>';
 const DUPLICATED_MSG =
-  '중복 ID 회원 존재<br><a href="/mongoRegister">회원가입으로 이동</a>';
+  '중복 ID 회원 존재<br><a href="/mongooseRegister">회원가입으로 이동</a>';
 const REGISTER_SUCCESS_MSG =
-  '회원가입 완료<br><a href="/mongoLogin">로그인으로 이동</a>';
+  '회원가입 완료<br><a href="/mongooseLogin">로그인으로 이동</a>';
 const LOGIN_SUCCESS_MSG = '로그인성공';
 const LOGIN_FAIL_MSG =
-  '로그인 실패 회원가입 먼저<br><a href="/mongoRegister">회원가입으로 이동</a>';
+  '로그인 실패 회원가입 먼저<br><a href="/mongooseRegister">회원가입으로 이동</a>';
 
 const registerUser = async (req, res) => {
   try {
@@ -44,7 +44,8 @@ const loginUser = async (req, res) => {
     });
 
     res.status(200);
-    res.redirect('/mongoBoard');
+    console.log('?');
+    res.redirect('/mongooseBoard');
   } catch (err) {
     console.error(err);
     res.status(500).send(UNEXPECTED_MSG);
@@ -54,9 +55,9 @@ const loginUser = async (req, res) => {
 const allUsers = async (req, res) => {
   try {
     const findCursor = User.find({});
-    const findUsers = await findCursor.toArray();
+    const findUsers = await findCursor;
     if (!findUsers) return res.status(400).send(UNEXPECTED_MSG);
-    res.render('Mongo_users.ejs', { USER: findUsers });
+    res.render('Mongoose_users.ejs', { USER: findUsers });
   } catch (err) {
     console.error(err);
     res.status(500).send(UNEXPECTED_MSG);

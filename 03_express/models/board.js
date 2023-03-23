@@ -2,19 +2,23 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
-const boardSchema = new Shema(
+const boardSchema = new Schema(
   {
-    userId: {
+    USERID: {
       type: String,
       required: true,
     },
-    title: {
+    TITLE: {
       type: String,
       required: true,
     },
-    content: {
-      type: Date,
+    CONTENT: {
+      type: String,
       default: Date.now,
+    },
+    IMAGE: {
+      type: String,
+      required: true,
     },
   },
   {
@@ -23,4 +27,4 @@ const boardSchema = new Shema(
   },
 );
 
-module.exports = mongoose.model('User', boardSchema);
+module.exports = mongoose.model('Board', boardSchema);

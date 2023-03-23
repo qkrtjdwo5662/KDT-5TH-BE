@@ -1,7 +1,8 @@
 const express = require('express');
-const { loginUser } = require('../controllers/Mongoose_userController');
 
 const router = express.Router();
+
+const { loginUser } = require('../controllers/Mongoose_userController');
 
 router.get('/', (req, res) => {
   res.render('Mongo_login.ejs');
