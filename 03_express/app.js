@@ -18,12 +18,12 @@ const boardRouter = require('./routes/board');
 const dataRouter = require('./routes/data');
 const cookieRouter = require('./routes/cookie');
 
-const sqlBoardRouter = require('./routes/SQL_Board');
-const sqlUsersRouter = require('./routes/SQL_Users');
+// const sqlBoardRouter = require('./routes/SQL_Board');
+// const sqlUsersRouter = require('./routes/SQL_Users');
 const mongoBoardRouter = require('./routes/Mongo_Board');
 const mongoUsersRouter = require('./routes/Mongo_Users');
-const sqlLoginRouter = require('./routes/SQL_Login');
-const sqlRegisterRouter = require('./routes/SQL_Register');
+// const sqlLoginRouter = require('./routes/SQL_Login');
+// const sqlRegisterRouter = require('./routes/SQL_Register');
 const mongoLoginRouter = require('./routes/Mongo_Login');
 const mongoRegisterRouter = require('./routes/Mongo_Register');
 const mongooseRegisterRouter = require('./routes/Mongoose_Register');
@@ -58,15 +58,15 @@ app.use('/board', boardRouter);
 app.use('/data', dataRouter);
 app.use('/cookie', cookieRouter);
 
-app.use('/sqlBoard', sqlBoardRouter);
-app.use('/sqlUsers', sqlUsersRouter);
+// app.use('/sqlBoard', sqlBoardRouter);
+// app.use('/sqlUsers', sqlUsersRouter);
 app.use('/mongoBoard', mongoBoardRouter);
 app.use('/mongoUsers', mongoUsersRouter);
 app.use('/mongooseBoard', mongooseBoardRouter);
 app.use('/mongooseUsers', mongooseUsersRouter);
 
-app.use('/sqlLogin', sqlLoginRouter);
-app.use('/sqlRegister', sqlRegisterRouter);
+// app.use('/sqlLogin', sqlLoginRouter);
+// app.use('/sqlRegister', sqlRegisterRouter);
 app.use('/mongoLogin', mongoLoginRouter);
 app.use('/mongoRegister', mongoRegisterRouter);
 app.use('/mongooseLogin', mongooseLoginRouter);
