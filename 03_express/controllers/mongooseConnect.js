@@ -23,5 +23,6 @@ const connect = async () => {
     console.error(err);
   }
 };
+connect();
 
 module.exports = connect;

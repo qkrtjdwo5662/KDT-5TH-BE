@@ -2,6 +2,7 @@ const { ObjectId } = require('mongodb');
 const MongooseConnect = require('./mongooseConnect');
 const Board = require('../models/board');
 
+// MongooseConnect();
 const UNEXPECTED_MSG = '<br><a href="/">메인페이지</a>';
 
 const getAllArticles = async (req, res) => {

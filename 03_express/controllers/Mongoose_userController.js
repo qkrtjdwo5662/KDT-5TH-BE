@@ -1,7 +1,7 @@
 const MongooseConnect = require('./mongooseConnect');
 const User = require('../models/user');
 
-MongooseConnect();
+// MongooseConnect();
 
 const UNEXPECTED_MSG =
   '알 수 없는 문 발생<br><a href="/mongooseRegister">회원가입으로 이동</a>';
@@ -18,11 +18,14 @@ const registerUser = async (req, res) => {
     const duplicatedUser = await User.findOne({ id: req.body.id });
     if (duplicatedUser) return res.status(400).send(DUPLICATED_MSG);
 
-    await User.create({
-      id: req.body.id,
+    const test = await User.create({
+      idder: req.body.id,
       password: req.body.password,
+      dd: 'dddd',
     });
+    if (!test) return res.status(400).send('이상');
     res.status(200).send(REGISTER_SUCCESS_MSG);
+    console.log(test);
   } catch (err) {
     console.error(err);
     res.status(500).send(UNEXPECTED_MSG);

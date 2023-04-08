@@ -5,7 +5,7 @@ const { registerUser } = require('../controllers/Mongoose_userController');
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  res.render('Mongo_register.ejs');
+  res.render('Mongoose_register.ejs');
 });
 
 router.post('/', registerUser);
